@@ -1,5 +1,4 @@
 # Create Get Pictures Service with Flask
-
 ![](images/image1.png)
 
 **Estimated time needed**: 90 minutes
@@ -24,8 +23,8 @@ If you haven't generated a GitHub Personal Access Token you should do so now. Yo
 Throughout this lab, you will be prompted to take screenshots and save them on your device. You will need these screenshots to either answer graded quiz questions or you will need to upload them as your submission for peer review at the end of this course. Your screenshot must have either the .jpg or .png extension.
 
 To take screenshots, you can either use various free screen-capture tools or your operating system's shortcut keys. For example:
-* Mac: You can use Shift + Command + 3 (⇧ + ⌘ + 3) on your keyboard to capture your entire screen or Shift + Command + 4 (⇧ + ⌘ + 4) to capture a window or area. The screen grabs will be saved as .jpg or .png files on your Desktop.
-* Windows: You can capture your active window by pressing Alt + Print Screen on your keyboard. This command copies an image of your active window to the clipboard. Next, open an image editor, paste the image from your clipboard to the image editor, and save the image as a .jpg or .png file.
+* **Mac**: You can use Shift + Command + 3 (⇧ + ⌘ + 3) on your keyboard to capture your entire screen or Shift + Command + 4 (⇧ + ⌘ + 4) to capture a window or area. The screen grabs will be saved as .jpg or .png files on your Desktop.
+* **Windows**: You can capture your active window by pressing Alt + Print Screen on your keyboard. This command copies an image of your active window to the clipboard. Next, open an image editor, paste the image from your clipboard to the image editor, and save the image as a .jpg or .png file.
 
 ## Initialize Development Environment
 Because the Cloud IDE environment is ephemeral, it may be deleted at any time. The next time you come into the lab, a new environment may be created. Unfortunately, this means that you will need to initialize your development environment every time it is recreated. This shouldn't happen too often as the environment can last for several days at a time, but when it is removed, following is the procedure to recreate it.
@@ -103,20 +102,18 @@ You should get back some patch level of Python 3.11:
   ```
 
 ### Evidence
-1. Note down the URL of your GitHub repository (not the template) to submit for peer review. Recall the graders are looking for a repository named Back-End-Development-Pictures in your account.
+1. Note down the URL of your GitHub repository (not the template) to submit for peer review. Recall the graders are looking for a repository named `Back-End-Development-Pictures` in your account.
 
 This completes the setup of the development environment. Anytime your environment is recreated, you will need to follow the above procedure.
 
 You are now ready to start working.
 
 ## Project Overview
-
 Your client has asked you to build a website for a famous band. The backend developer on the project has recently left, and you need to finish the code so the website can go live. The application consists of some different microservices working together.
 
 You are asked in this lab to finish the **Get Pictures** microservice. This microservice stores URLs of pictures from past events. The previous developer started a Python Flask-based REST API and wrote some tests following the TDD or test driven development process. You will need to get the code from GitHub and fill in the missing pieces so that the code can pass all tests.
 
 ## REST API Guidelines Review
-
 The architect has provided you the following schema for the endpoints:
 
 #### RESTful API Endpoints
@@ -127,9 +124,9 @@ The architect has provided you the following schema for the endpoints:
 | Read | GET | 200 OK | A picture as json {...} | GET `/picture/{id}`
 | Update | PUT | 200 OK | A picture as json {...} | PUT `/picture/{id}`
 | Delete | DELETE | 204 NO CONTENT | "" | DELETE `/picture/{id}`
+
 The following end points were completed by the previous developer and can be used for reference:
 
-**Action Method Return code Body URL Endpoint**
 | ACTION | METHOD   | RETURN CODE   | BODY  | URL ENDPOINT      |
 |--------|----------|---------------|-------|-------------------|
 | Health | GET      | 200 OK        | ""    | GET `/health`     |
@@ -138,7 +135,6 @@ The following end points were completed by the previous developer and can be use
 | Count  | GET      | 200 OK        | ""    | GET `/count`      |
 
 ## Exercise 1: Test health and count endpoints
-
 Before you implement the Get Pictures API, let's first test the two endpoints that the previous developer implemented.
 * `/health`
 * `/count`
@@ -186,8 +182,8 @@ and
   ```
 
 You should see the following results: 
-`/health`
 
+`/health`
   ```bash
   $ curl --request GET --url http://localhost:5000/health
   {"status":"OK"}
@@ -213,21 +209,19 @@ You should see the following output:
 If you run the pytest command without the -k flag, it will run all the tests, and you will see the other tests fail. You use the -k flag to trim the output to just the two endpoint tests.
 
 ### Evidence
-
-1. Run the pytest command listed above and take a screenshot of the terminal. There is no need to add the red boxes. Save the screenshot as exercise1-count-health-passing.jpg (or .png). The screenshot should show the two tests as passed.
+1. Run the pytest command listed above and take a screenshot of the terminal. There is no need to add the red boxes. Save the screenshot as `exercise1-count-health-passing.jpg` (or `.png`). The screenshot should show the two tests as passed.
 
 Congratulations! You have just completed your first story.
 
 ## Exercise 2: Implement the GET /picture endpoint
-
 It is now time to implement the rest of the endpoints. If you run the pytest command now, you will see 9 tests as failed. Your output might look a little different than the screenshot as we have removed all the logs of the fiailing tests for brevity.
 ![](images/image15.png)
-Your task for the rest of the lab is to complete the remaining code to pass the failed tests. Let's start with the GET /picture endpoint first.
+Your task for the rest of the lab is to complete the remaining code to pass the failed tests. Let's start with the GET `/picture` endpoint first.
 
 ### Your Task
 Before you write the code for the endpoint, let's create a branch so you can commit your code back to GitHub.
 
-#### Task 1 : Create a Branch
+#### Task 1: Create a Branch
 Since you are working in branches, you must pull the latest changes from the main branch to stay up to date. You can then create a new branch.
 
 Change into the Back-End-Development-Pictures directory and execute the following steps:
@@ -240,14 +234,13 @@ Change into the Back-End-Development-Pictures directory and execute the followin
 
 This will switch to the main branch, pull the latest changes, and create a new branch. You will be asked to push all your changes to your GitHub repo and merge all code back into your main branch with a pull request.
 
-### Task 2 : Finish the code for the endpoint
-You will write all the code in the Back-End-Development-Pictures/backend/routes.py file.
+### Task 2: Finish the code for the endpoint
+You will write all the code in the `Back-End-Development-Pictures/backend/routes.py` file.
 
-**Note:** To open in File Explorer, go to this location:
-`Back-End-Development-Pictures/backend/routes.py`
+**Note:** To open in File Explorer, go to this location: `Back-End-Development-Pictures/backend/routes.py`
 
 1. Create a Flask route that responds to the GET method for the endpoint `/picture`.
-2. Create a function called get_pictures() to hold the implementation.
+2. Create a function called `get_pictures()` to hold the implementation.
 3. The URLs are loaded into a list called data. You need to return it in this method.
 4. Run pytest until the following functions pass:
   ```bash
@@ -258,502 +251,178 @@ You will write all the code in the Back-End-Development-Pictures/backend/routes.
   tests/test_api.py::test_get_pictures_check_content_type_equals_json
   ```
 
-**Evidence**
-1. Once the functions pass, take a screenshot of the passing functions and name it as exercise2-get-pictures-passing.jpg (or .png).
+### Evidence
+1. Once the functions pass, take a screenshot of the passing functions and name it as `exercise2-get-pictures-passing.jpg` (or `.png`).
 
 Congratulations! You just added the first REST endpoint to your backend.
 
 ## Exercise 3: Implement the GET /picture/id endpoint
-
-As before, you will write the code for the endpoint in the
-./backend/routes.py file.
-
-  -----------------------------------------------------------------------
-  Open **routes.py** in IDE
-  -----------------------------------------------------------------------
-  Open **routes.py** in IDE
-
-  -----------------------------------------------------------------------
-
-**Note:** To open in File Explorer, go to this location:\
-Back-End-Development-Pictures/backend/routes.py
-
-1\. Create a Flask route that responds to the GET method for the
-endpoint /picture/\<id\.
-
-2\. Create a function called get_picture_by_id(id) to hold the
-implementation.
-
-3\. The URLs are loaded into a list called data. You will need to
-parse through the list, find the URL with the given id, and return it
-back to the caller.
-
-4\. Run pytest until the following functions pass:
-
-1\. 1\
-2. 2\
-3. 3\
-4. 4\
-5. 5\
-6. 6\
-7. 7\
-1. tests/test_api.py::test_health PASSED\
-2. tests/test_api.py::test_count PASSED\
-3. tests/test_api.py::test_data_contains_10_pictures PASSED\
-4. tests/test_api.py::test_get_picture PASSED\
-5. tests/test_api.py::test_get_pictures_check_content_type_equals_json
-PASSED\
-6. tests/test_api.py::test_get_picture_by_id PASSED\
-7. tests/test_api.py::test_pictures_json_is_not_empty PASSED
-
-  -----------------------------------------------------------------------
-  Copied!
-  -----------------------------------------------------------------------
-
-  -----------------------------------------------------------------------
-
-Congratulations! You just added the second REST endpoint to your
-backend.
-
-**Exercise 4: Implement the POST /picture endpoint**
-
-As before, you will write the code for the endpoint in the
-./backend/routes.py file.
-
-  -----------------------------------------------------------------------
-  Open **routes.py** in IDE
-
-  -----------------------------------------------------------------------
-
-**Note:** To open in File Explorer, go to this location:\
-Back-End-Development-Pictures/backend/routes.py
-
-1\. Create a Flask route that responds to the POST method for the
-endpoint /picture/\<id\. Use the methods=\[\"POST\"\] in your app
-decorator.
-
-2\. Create a function called create_picture() to hold the
-implementation.
-
-3\. You will first need to extract the picture data from the request
-body and then append it to the data list.
-
-4\. If a picture with the id already exists, send an HTTP code of 302
-back to the user with a message of {\"Message\": \"picture with id
-{picture\[\'id\'\]} already present\"}.
-
-5\. Run pytest until the following functions pass:
-
-1\. 1\
-2. 2\
-3. 3\
-4. 4\
-5. 5\
-6. 6\
-7. 7\
-8. 8\
-9. 9\
-10. 10\
-11. 11\
-1. tests/test_api.py::test_health PASSED\
-2. tests/test_api.py::test_count PASSED\
-3. tests/test_api.py::test_data_contains_10_pictures PASSED\
-4. tests/test_api.py::test_get_picture PASSED\
-5. tests/test_api.py::test_get_pictures_check_content_type_equals_json
-PASSED\
-6. tests/test_api.py::test_get_picture_by_id PASSED\
-7. tests/test_api.py::test_pictures_json_is_not_empty PASSED\
-8. tests/test_api.py::test_post_picture {\'id\': 200, \'pic_url\':
-\'http://dummyimage.com/230x100.png/dddddd/000000\',
-\'event_country\': \'United States\', \'event_state\': \'California\',
-\'event_city\': \'Fremont\', \'event_date\': \'11/2/2030\'} 9. PASSED\
-10. tests/test_api.py::test_post_picture_duplicate {\'id\': 200,
-\'pic_url\': \'http://dummyimage.com/230x100.png/dddddd/000000\',
-\'event_country\': \'United States\', \'event_state\': \'California\',
-\'event_city\': \'Fremont\', \'event_date\': \'11/2/2030\'} 11. PASSED
-
-  -----------------------------------------------------------------------
-  Copied!
-  -----------------------------------------------------------------------
-  i
-
-  -----------------------------------------------------------------------
-
-**Evidence**
-
-1\. Once the functions pass, take a screenshot of the passing
-functions and name it as exercise4-post-picture-passing.jpg (or .png).
-
-**Exercise 5: Implement the PUT /picture endpoint**
-
-The PUT endpoint will be used to update an existing picture resource.
-As before, you will write the code for the endpoint in the
-./backend/routes.py file.
-
-  -----------------------------------------------------------------------
-  Open **routes.py** in IDE
-  -----------------------------------------------------------------------
-
-  -----------------------------------------------------------------------
-
-**Note:** To open in File Explorer, go to this location:\
-Back-End-Development-Pictures/backend/routes.py
-
-1\. Create a Flask route that responds to the POST method for the
-endpoint /picture/\<int:id\. Use the methods=\[\"PUT\"\] in your app
-decorator.\
-2. Create a function called update_picture(id) to hold the
-implementation.
-
-3\. You will first need to extract the picture data from the request
-body.
-
-4\. You will then find the picture in the data list. If the picture
-exists, you will update it with the incoming request.\
-5. If the picture does not exist, you will send back a status of 404
-with a message {\"message\": \"picture not found\"}.
-
-6\. Run pytest until the following functions pass:
-
-1\. 1\
-2. 2\
-3. 3\
-4. 4\
-5. 5\
-6. 6\
-7. 7\
-8. 8\
-9. 9\
-10. 10\
-11. 11\
-12. 12\
-1. tests/test_api.py::test_health PASSED\
-2. tests/test_api.py::test_count PASSED\
-3. tests/test_api.py::test_data_contains_10_pictures PASSED\
-4. tests/test_api.py::test_get_picture PASSED\
-5. tests/test_api.py::test_get_pictures_check_content_type_equals_json
-PASSED\
-6. tests/test_api.py::test_get_picture_by_id PASSED\
-7. tests/test_api.py::test_pictures_json_is_not_empty PASSED\
-8. tests/test_api.py::test_post_picture {\'id\': 200, \'pic_url\':
-\'http://dummyimage.com/230x100.png/dddddd/000000\',
-\'event_country\': \'United States\', \'event_state\': \'California\',
-\'event_city\': \'Fremont\', \'event_date\': \'11/2/2030\'} 9. PASSED\
-10. tests/test_api.py::test_post_picture_duplicate {\'id\': 200,
-\'pic_url\': \'http://dummyimage.com/230x100.png/dddddd/000000\',
-\'event_country\': \'United States\', \'event_state\': \'California\',
-\'event_city\': \'Fremont\', \'event_date\': \'11/2/2030\'} 11.
-PASSED\
-12. tests/test_api.py::test_update_picture_by_id PASSED
-
-  -----------------------------------------------------------------------
-  Copied!
-  -----------------------------------------------------------------------
-
-  -----------------------------------------------------------------------
-
-**Exercise 6: Implement the DELETE /picture endpoint**
-
-**Task 1 : Implement the Delete endpoint**
-
-The DELETE endpoint is used to delete an existing picture resource. As
-before, you will write the code for the endpoint in the
-./backend/routes.py file.
-
-  -----------------------------------------------------------------------
-  Open **routes.py** in IDE
-  -----------------------------------------------------------------------
-
-  -----------------------------------------------------------------------
-
-**Note:** To open in File Explorer go to this location:\
-Back-End-Development-Pictures/backend/routes.py
-
-1\. Create a Flask route that responds to the POST method for the
-endpoint /picture/\<int:id\. Use the methods=\[\"DELETE\"\] in your
-app decorator.
-
-2\. Create a function called delete_picture(id) to hold the
-implementation.
-
-3\. You will first extract the id from the URL.
-
-4\. Next, traverse the data list to find the picture by id. If the
-picture exists, you will delete the item from the list and return an
-empty body with a status of HTTP_204_NO_CONTENT. 5. If the picture
-does not exist, you will send back a status of 404 with a message
-{\"message\": \"picture not found\"}.
-
-6\. Run pytest until the following functions pass:
-
-1\. 1\
-2. 2\
-3. 3\
-4. 4\
-5. 5\
-6. 6\
-7. 7\
-8. 8\
-9. 9\
-10. 10\
-11. 11\
-12. 12\
-13. 13\
-1. tests/test_api.py::test_health PASSED\
-2. tests/test_api.py::test_count PASSED\
-3. tests/test_api.py::test_data_contains_10_pictures PASSED\
-4. tests/test_api.py::test_get_picture PASSED\
-5. tests/test_api.py::test_get_pictures_check_content_type_equals_json
-PASSED\
-6. tests/test_api.py::test_get_picture_by_id PASSED\
-7. tests/test_api.py::test_pictures_json_is_not_empty PASSED\
-8. tests/test_api.py::test_post_picture {\'id\': 200, \'pic_url\':
-\'http://dummyimage.com/230x100.png/dddddd/000000\',
-\'event_country\': \'United States\', \'event_state\': \'California\',
-\'event_city\': \'Fremont\', \'event_date\': \'11/2/2030\'} 9. PASSED\
-10. tests/test_api.py::test_post_picture_duplicate {\'id\': 200,
-\'pic_url\': \'http://dummyimage.com/230x100.png/dddddd/000000\',
-\'event_country\': \'United States\', \'event_state\': \'California\',
-\'event_city\': \'Fremont\', \'event_date\': \'11/2/2030\'} 11.
-PASSED\
-12. tests/test_api.py::test_update_picture_by_id PASSED\
-13. tests/test_api.py::test_delete_picture_by_id PASSED
-
-  -----------------------------------------------------------------------
-  Copied!
-  -----------------------------------------------------------------------
-
-  -----------------------------------------------------------------------
-
-**Evidence**
-
-1\. Once the functions pass, take a screenshot of the passing
-functions and name it asexercise6-delete-picture-passing.jpg (or
-.png).
-
-You should now have all the tests passing as shown in the screenshot
-here:
-
-![](images/image16.png){width="8.829166666666667in"
-height="3.426388888888889in"}
-
-**Task 2 : Push the branch to GitHub and create a PR**
-
-Now that you have finished the code for the microservice, you can push
-the backend-rest branch back to your GitHub fork. Since you are the
-only one working on this project, go ahead and merge the PR and delete
-the branch. Make sure all your code changes are pushed back to the
-main branch before proceeding to the next lab.
-
-1\. You will be prompted to set up your git user and email the first
-time you push:
-
-1\. 1\
-2. 2\
-1. git config \--local user.name \"{your GitHub name here}\"\
-2. git config \--local user.email {your GitHub email here}
-
-  -----------------------------------------------------------------------
-  Copied!
-  -----------------------------------------------------------------------
-
-  -----------------------------------------------------------------------
-
-2\. Use the git commit -am command to commit your changes with the
-message "implemented pictures service", and the git push command to
-push those changes to your repository.
-
-+-----------------------------------+-----------------------------------+
-| ![](vertopal_674f9a23f6244378     | Click here for a hint.\         |
-| 8e42dc11eb0a6d4f/media/image17.pn | Click here for a hint.          |
-| g){width="5.555555555555555e-2in" |                                   |
-| height="0.125in"}                 |                                   |
-+===================================+===================================+
-+-----------------------------------+-----------------------------------+
-
-3\. You should see a dialog at the bottom of the screen asking for
-permission to open GitHub sign in flow. Click on Allow.
-
-![](images/image18.png){width="6.870833333333334in"
-height="2.809721128608924in"}
-
-4\. The IDE will ask you for your GitHub username and password. Use
-the token you created in the beginning of the lab as your password.
-
-![](images/image19.png){width="6.354166666666667in"
-height="2.2180555555555554in"}
-
-5\. You can see the push logs in the terminal if the authentication is
-succesfull.
-
-![](images/image20.png){width="6.002777777777778in"
-height="2.0513877952755903in"}
-
-6\. Create a pull request on GitHub to merge your changes into the
-main branch.
-
-![](images/image21.png){width="8.429166666666667in"
-height="4.068054461942257in"}
-
+As before, you will write the code for the endpoint in the `./backend/routes.py` file.
+
+**Note:** To open in File Explorer, go to this location: `Back-End-Development-Pictures/backend/routes.py`
+
+1. Create a Flask route that responds to the GET method for the endpoint `/picture/<id>`.
+2. Create a function called `get_picture_by_id(id)` to hold the implementation.
+3. The URLs are loaded into a list called data. You will need to parse through the list, find the URL with the given id, and return it back to the caller.
+4. Run pytest until the following functions pass:
+  ```bash
+  tests/test_api.py::test_health PASSED
+  tests/test_api.py::test_count PASSED
+  tests/test_api.py::test_data_contains_10_pictures PASSED
+  tests/test_api.py::test_get_picture PASSED
+  tests/test_api.py::test_get_pictures_check_content_type_equals_json PASSED
+  tests/test_api.py::test_get_picture_by_id PASSED
+  tests/test_api.py::test_pictures_json_is_not_empty PASSED
+  ```
+
+Congratulations! You just added the second REST endpoint to your backend.
+
+## Exercise 4: Implement the POST /picture endpoint
+As before, you will write the code for the endpoint in the `./backend/routes.py` file.
+
+**Note:** To open in File Explorer, go to this location: `Back-End-Development-Pictures/backend/routes.py`
+
+1. Create a Flask route that responds to the POST method for the endpoint `/picture/<id>`. Use the `methods=["POST"]` in your app decorator.
+2. Create a function called `create_picture()` to hold the implementation.
+3. You will first need to extract the picture data from the request body and then append it to the data list.
+4. If a picture with the id already exists, send an HTTP code of `302` back to the user with a message of `{"Message": "picture with id {picture['id']} already present"}`.
+5. Run pytest until the following functions pass:
+  ```bash
+  tests/test_api.py::test_health PASSED
+  tests/test_api.py::test_count PASSED
+  tests/test_api.py::test_data_contains_10_pictures PASSED
+  tests/test_api.py::test_get_picture PASSED
+  tests/test_api.py::test_get_pictures_check_content_type_equals_json PASSED
+  tests/test_api.py::test_get_picture_by_id PASSED
+  tests/test_api.py::test_pictures_json_is_not_empty PASSED
+  tests/test_api.py::test_post_picture {'id':200, 'pic_url':'http://dummyimage.com/230x100.png/dddddd/000000', 'event_country':'United States', 'event_state':'California', 'event_city':'Fremont', 'event_date':'11/2/2030'} PASSED
+  tests/test_api.py::test_post_picture_duplicate {'id':200, 'pic_url':'http://dummyimage.com/230x100.png/dddddd/000000', 'event_country':'United States', 'event_state':'California', 'event_city':'Fremont', 'event_date':'11/2/2030'} PASSED
+  ```
+
+### Evidence
+1. Once the functions pass, take a screenshot of the passing functions and name it as `exercise4-post-picture-passing.jpg` (or `.png`).
+
+## Exercise 5: Implement the PUT /picture endpoint
+The PUT endpoint will be used to update an existing picture resource. As before, you will write the code for the endpoint in the `./backend/routes.py` file.
+
+**Note:** To open in File Explorer, go to this location: `Back-End-Development-Pictures/backend/routes.py`
+
+1. Create a Flask route that responds to the POST method for the endpoint `/picture/<int:id>`. Use the `methods=["PUT"]` in your app decorator.
+2. Create a function called `update_picture(id)` to hold the implementation.
+3. You will first need to extract the picture data from the request body.
+4. You will then find the picture in the data list. If the picture exists, you will update it with the incoming request.
+5. If the picture does not exist, you will send back a status of `404` with a message `{"message": "picture not found"}`.
+6. Run pytest until the following functions pass:
+  ```bash
+  tests/test_api.py::test_health PASSED
+  tests/test_api.py::test_count PASSED
+  tests/test_api.py::test_data_contains_10_pictures PASSED
+  tests/test_api.py::test_get_picture PASSED
+  tests/test_api.py::test_get_pictures_check_content_type_equals_json PASSED
+  tests/test_api.py::test_get_picture_by_id PASSED
+  tests/test_api.py::test_pictures_json_is_not_empty PASSED
+  tests/test_api.py::test_post_picture {'id':200, 'pic_url':'http://dummyimage.com/230x100.png/dddddd/000000', 'event_country':'United States', 'event_state':'California', 'event_city':'Fremont', 'event_date':'11/2/2030'} PASSED
+  tests/test_api.py::test_post_picture_duplicate {'id':200, 'pic_url':'http://dummyimage.com/230x100.png/dddddd/000000', 'event_country':'United States', 'event_state':'California', 'event_city':'Fremont', 'event_date':'11/2/2030'} PASSED
+  tests/test_api.py::test_update_picture_by_id PASSED
+  ```
+
+## Exercise 6: Implement the DELETE /picture endpoint
+
+### Task 1: Implement the Delete endpoint
+The DELETE endpoint is used to delete an existing picture resource. As before, you will write the code for the endpoint in the `./backend/routes.py` file.
+
+**Note:** To open in File Explorer, go to this location: `Back-End-Development-Pictures/backend/routes.py`
+
+1. Create a Flask route that responds to the POST method for the endpoint `/picture/<int:id>`. Use the `methods=["DELETE"]` in your app decorator.
+2. Create a function called `delete_picture(id)` to hold the implementation.
+3. You will first extract the id from the URL.
+4. Next, traverse the data list to find the picture by id. If the picture exists, you will delete the item from the list and return an empty body with a status of HTTP_204_NO_CONTENT.
+5. If the picture does not exist, you will send back a status of `404` with a message `{"message": "picture not found"}`.
+6. Run pytest until the following functions pass:
+  ```bash
+  tests/test_api.py::test_health PASSED
+  tests/test_api.py::test_count PASSED
+  tests/test_api.py::test_data_contains_10_pictures PASSED
+  tests/test_api.py::test_get_picture PASSED
+  tests/test_api.py::test_get_pictures_check_content_type_equals_json PASSED
+  tests/test_api.py::test_get_picture_by_id PASSED
+  tests/test_api.py::test_pictures_json_is_not_empty PASSED
+  tests/test_api.py::test_post_picture {'id':200, 'pic_url':'http://dummyimage.com/230x100.png/dddddd/000000', 'event_country':'United States', 'event_state':'California', 'event_city':'Fremont', 'event_date':'11/2/2030'} PASSED
+  tests/test_api.py::test_post_picture_duplicate {'id':200, 'pic_url':'http://dummyimage.com/230x100.png/dddddd/000000', 'event_country':'United States', 'event_state':'California', 'event_city':'Fremont', 'event_date':'11/2/2030'} PASSED
+  tests/test_api.py::test_update_picture_by_id PASSED
+  tests/test_api.py::test_delete_picture_by_id PASSED
+  ```
+
+### Evidence
+1. Once the functions pass, take a screenshot of the passing functions and name it as `exercise6-delete-picture-passing.jpg` (or `.png`).
+
+You should now have all the tests passing as shown in the screenshot here:
+![](images/image16.png)
+
+### Task 2: Push the branch to GitHub and create a PR
+Now that you have finished the code for the microservice, you can push the backend-rest branch back to your GitHub fork. Since you are the only one working on this project, go ahead and merge the PR and delete the branch. Make sure all your code changes are pushed back to the main branch before proceeding to the next lab.
+
+1. You will be prompted to set up your git user and email the first time you push:
+  ```bash
+  git config --local user.name "{your GitHub name here}"
+  git config --local user.email {your GitHub email here}
+  ```
+2. Use the `git commit -am` command to commit your changes with the message "implemented pictures service", and the `git push` command to push those changes to your repository.
+3. You should see a dialog at the bottom of the screen asking for permission to open GitHub sign in flow. Click on `Allow`.
+![](images/image18.png)
+4. The IDE will ask you for your GitHub username and password. Use the token you created in the beginning of the lab as your password.
+![](images/image19.png)
+5. You can see the push logs in the terminal if the authentication is successful.
+![](images/image20.png)
+6. Create a pull request on GitHub to merge your changes into the main branch.
+![](images/image21.png)
 7. Since there is no one else on your team, accept the pull request, merge it, and delete the branch.
-
-![](images/image22.png){width="7.7625in"
-height="4.044444444444444in"}
-
+![](images/image22.png)
 The main branch, at this point, should have your completed code.
 
-**Reference: RESTful Service**\
+## Reference: RESTful Service
 Here are some hints on the RESTful behavior of each of the endpoints.
 
-**List**
+### List
+* List should simply send back the list of pictures dict and return the HTTP_200_OK return code. Simply return the `data` structure.
+* It should never send back a 404_NOT_FOUND.
 
-![](images/image23.png){width="4.1666666666666664e-2in"
-height="2.7777777777777776e-2in"}List should simply send back the list
-of pictures dict and return the HTTP_200_OK return code. Simply return
-the data structure.
+### Read
+* Read should accept a picture id and traverse through the `data` to find the id.
+* It should return an HTTP_404_NOT_FOUND if the picture cannot be found with a message `{"message": "picture not found"}`. 
+* If the picture is found, it should return the picture as a Python dictionary with a return code of HTTP_200_OK.
 
-![](images/image24.png){width="4.1666666666666664e-2in"
-height="4.1666666666666664e-2in"}It should never send back a
-404_NOT_FOUND.\
-**Read**
+### Create
+* Create should accept only requests with the POST method.
+* It will look for the picture in the incoming request.
+* It should return an HTTP_302_FOUND if the picture already exists in the `data` list.
+* Otherwise, it should add the incoming picture to the `data` list and return an HTTP_201_CREATED with a message `{"Message": f"picture with id {picture_in['id']} already present"}`.
 
-+-----------------------------------+-----------------------------------+
-| ![](vertopal_674f9a23f62443788    | Read should accept a picture id |
-| e42dc11eb0a6d4f/media/image25.png | and traverse through the data   |
-| ){width="4.1666666666666664e-2in" | to find the id.                 |
-| height="2.7777777777777776e-2in"} |                                 |
-|                                   | It should return an             |
-| ![](vertopal_674f9a23f62443788    | HTTP_404_NOT_FOUND if the       |
-| e42dc11eb0a6d4f/media/image26.png | picture cannot be found with a  |
-| ){width="4.1666666666666664e-2in" | message {\"message\": \"picture |
-| height="4.1666666666666664e-2in"} | not found\"}. If the picture is |
-|                                   | found, it should return the     |
-| ![](vertopal_674f9a23f62443788    | picture as a Python dictionary  |
-| e42dc11eb0a6d4f/media/image27.png | with a return code of           |
-| ){width="4.1666666666666664e-2in" | HTTP_200_OK.                    |
-| height="2.7777777777777776e-2in"} |                                   |
-+===================================+===================================+
-+-----------------------------------+-----------------------------------+
+### Update
+* Update should accept an account_id and HTTP method of PUT.
+* It should return an HTTP_404_NOT_FOUND if the picture cannot be found.
+* If the picture is found, it should replace the contents of the picture with the one in the request. It should return a code of HTTP_201_CREATED and the updated picture.
+* If the picture is not found, it should return a code of HTTP_404_NOT_FOUND and a message `{"message": "picture not found"}`.
 
-**Create**
-
-![](images/image28.png){width="4.1666666666666664e-2in"
-height="2.7777777777777776e-2in"}Create should accept only requests
-with the POST method.
-
-![](images/image29.png){width="4.1666666666666664e-2in"
-height="4.1666666666666664e-2in"}It will look for the picture in the
-incoming request.
-
-![](images/image30.png){width="4.1666666666666664e-2in"
-height="2.7777777777777776e-2in"}It should return an HTTP_302_FOUND if
-the picture already exists in the data list.
-
-![](images/image31.png){width="4.1666666666666664e-2in"
-height="2.7777777777777776e-2in"}Otherwise, it should add the incoming
-picture to the data list and return an HTTP_201_CREATED with a message
-{\"Message\": f\"picture with id {picture_in\[\'id\'\]} already
-present\"}.
-
-**Update**
-
-![](images/image32.png){width="4.1666666666666664e-2in"
-height="2.7777777777777776e-2in"}Update should accept an account_id
-and HTTP method of PUT.
-
-![](images/image2.png){width="4.1666666666666664e-2in"
-height="2.7777777777777776e-2in"}It should return an
-HTTP_404_NOT_FOUND if the picture cannot be found.
-
-![](images/image3.png){width="4.1666666666666664e-2in"
-height="4.1666666666666664e-2in"}If the picture is found, it should
-replace the contents of the picture with the one in the request. It
-should return a code of HTTP_201_CREATED and the updated picture.
-
-![](images/image33.png){width="4.1666666666666664e-2in"
-height="2.7777777777777776e-2in"}If the picture is not found, it
-should return a code of HTTP_404_NOT_FOUND and a message {\"message\":
-\"picture not found\"}.\
-**Delete**
-
-![](images/image34.png){width="4.1666666666666664e-2in"
-height="4.1666666666666664e-2in"}Delete should accept a picture id and
-look for the picture in the data list.
-
-![](images/image35.png){width="4.1666666666666664e-2in"
-height="2.7777777777777776e-2in"}If the picture is not found, it
-should return a code of HTTP_404_NOT_FOUND and a message {\"message\":
-\"picture not found\"}.
-
-![](images/image36.png){width="4.1666666666666664e-2in"
-height="4.1666666666666664e-2in"}If the picture is found, it should
-delete the picture from the data list.
-
-![](images/image37.png){width="4.1666666666666664e-2in"
-height="2.7777777777777776e-2in"}It should return an empty string ""
-with a return code of HTTP_204_NO_CONTENT.
+### Delete
+* Delete should accept a picture id and look for the picture in the `data` list.
+* If the picture is not found, it should return a code of HTTP_404_NOT_FOUND and a message `{"message": "picture not found"}`.
+* If the picture is found, it should delete the picture from the `data` list.
+* It should return an empty string "" with a return code of HTTP_204_NO_CONTENT.
 
 Write the code to make the code pass the test cases as shown above.
 
-**Hints and Solutions**\
-This page contains the remaining hints and solutions for the List,
-Create, Update, and Delete REST APIs.
+## Conclusion
+Congratulations! You have finished implementing the first microservice for getting pictures. This microservice will be used by the main site in the final lab for the project.
 
-**Hints**\
-**List**
+### Next Steps
+You can resume the course at this point. You will be asked to create another microservice in the next module.
 
-![](images/image38.png){width="5.555555555555555e-2in"
-height="5.555555555555555e-2in"}Click here for a hint.\
-**Read**
-
-![](images/image39.png){width="5.555555555555555e-2in"
-height="5.555555555555555e-2in"}Click here for a hint.\
-**Create**
-
-![](images/image40.png){width="5.555555555555555e-2in"
-height="5.555555555555555e-2in"}Click here for a hint.\
-**Update**
-
-![](images/image41.png){width="5.555555555555555e-2in"
-height="5.555555555555555e-2in"}Click here for a hint.\
-**Delete**
-
-![](images/image42.png){width="5.555555555555555e-2in"
-height="5.555555555555555e-2in"}Click here for a hint.\
-**Solutions**\
-**List**
-![](images/image43.png){width="5.555555555555555e-2in"
-height="5.555555555555555e-2in"}Click here to check your solution.\
-**Read**
-
-![](images/image44.png){width="5.555555555555555e-2in"
-height="5.555555555555555e-2in"}Click here to check your solution.\
-**Create**
-
-![](images/image45.png){width="5.555555555555555e-2in"
-height="5.555555555555555e-2in"}Click here to check your solution.\
-**Update**
-
-![](images/image46.png){width="5.555555555555555e-2in"
-height="5.555555555555555e-2in"}Click here to check your solution.\
-**Delete**
-
-![](images/image47.png){width="5.555555555555555e-2in"
-height="5.555555555555555e-2in"}Click here to check your solution.
-
-**Conclusion**
-Congratulations! You have finished implementing the first microservice
-for getting pictures. This microservice will be used by the main site
-in the final lab for the project.
-
-**Next Steps**
-You can resume the course at this point. You will be asked to create
-another microservice in the next module.
-
-**Author(s)**
+### Author(s)
 CF
-**Changelog**
 
-**Date** **Version Changed by Change Description**
-2023-02-04 0.1 CF Initial version created
-2023-02-09 0.2 SH QA pass with edits
+### Changelog
+| DATE | VERSION | CHANGED BY | CHANGED DESCRIPTION |
+|------|---------|------------|---------------------|
+| 2023-02-04 | 0.1 | CF | Initial version created |
+| 2023-02-09 | 0.2 | SH | QA pass with edits |
