@@ -1,638 +1,269 @@
-**Create Get Pictures Service with Flask**
+# Create Get Pictures Service with Flask
 
-![](images/image1.png){width="0.8333333333333334in"
-height="0.2916666666666667in"}
+![](images/image1.png)
 
 **Estimated time needed**: 90 minutes
 
-Welcome to the **Create Get Pictures Service with Flask** hands-on
-lab. In this lab, you will begin to build the service that you will
-eventually deploy to IBM Code Engine. The lab provides a GitHub
-template repository to get you started. The repository also contains
-python unit tests. You will be asked to complete the code so that it
-can pass all tests.
+Welcome to the **Create Get Pictures Service with Flask** hands-on lab. In this lab, you will begin to build the service that you will eventually deploy to IBM Code Engine. The lab provides a GitHub template repository to get you started. The repository also contains python unit tests. You will be asked to complete the code so that it can pass all tests.
 
-**Objectives**
-
+## Objectives
 In this lab, you will:
+* Create a Flask server
+* Write RESTful APIs on picture URL
+* Check the APIs should pass the given
 
-![](images/image2.png){width="4.1666666666666664e-2in"
-height="2.7777777777777776e-2in"}Create a Flask server
+### Note: Important Security Information
+Welcome to the Cloud IDE. This is where all your development will take place. It has all the tools you will need to use, including **Python** and **Flask**.
 
-![](images/image3.png){width="4.1666666666666664e-2in"
-height="4.1666666666666664e-2in"}Write RESTful APIs on picture URL
-resource
+It is important to understand that the lab environment is ephemeral. It only lives for a short while before it is destroyed. It is imperative that you push all changes made to your own GitHub repository so that it can be recreated in a new lab environment any time it is required. Also, note that this environment is shared and, therefore, not secure. You should not store any personal information, usernames, passwords, or access tokens in this environment for any purpose.
 
-![](images/image4.png){width="4.1666666666666664e-2in"
-height="2.7777777777777776e-2in"}Check the APIs should pass the given
-**pytest** tests
+### Your Task
+If you haven't generated a GitHub Personal Access Token you should do so now. You will need it to push code back to your repository. It should have repo and write permissions, and be set to expire in 60 days. When Git prompts you for a password in the Cloud IDE environment, use your Personal Access Token instead. Follow the steps in the for detailed instructions.
 
-**Note: Important Security Information**
+### Note on Screenshots
+Throughout this lab, you will be prompted to take screenshots and save them on your device. You will need these screenshots to either answer graded quiz questions or you will need to upload them as your submission for peer review at the end of this course. Your screenshot must have either the .jpg or .png extension.
 
-**Note: Important Security Information**
+To take screenshots, you can either use various free screen-capture tools or your operating system's shortcut keys. For example:
+* Mac: You can use Shift + Command + 3 (⇧ + ⌘ + 3) on your keyboard to capture your entire screen or Shift + Command + 4 (⇧ + ⌘ + 4) to capture a window or area. The screen grabs will be saved as .jpg or .png files on your Desktop.
+* Windows: You can capture your active window by pressing Alt + Print Screen on your keyboard. This command copies an image of your active window to the clipboard. Next, open an image editor, paste the image from your clipboard to the image editor, and save the image as a .jpg or .png file.
 
-Welcome to the Cloud IDE. This is where all your development will take
-place. It has all the tools you will need to use, including **Python**
-and **Flask**.
+## Initialize Development Environment
+Because the Cloud IDE environment is ephemeral, it may be deleted at any time. The next time you come into the lab, a new environment may be created. Unfortunately, this means that you will need to initialize your development environment every time it is recreated. This shouldn't happen too often as the environment can last for several days at a time, but when it is removed, following is the procedure to recreate it.
 
-It is important to understand that the lab environment is ephemeral.
-It only lives for a short while before it is destroyed. It is
-imperative that you push all changes made to your own GitHub
-repository so that it can be recreated in a new lab environment any
-time it is required. Also, note that this environment is shared and,
-therefore, not secure. You should not store any personal information,
-usernames, passwords, or access tokens in this environment for any
-purpose.
+### Overview
 
-**Your Task**\
-If you haven\'t generated a GitHub Personal Access Token you should do
-so now. You will need it to push code back to your repository. It
-should have repo and write permissions, and be set to expire in 60
-days. When Git prompts you for a password in the Cloud IDE
-environment, use your Personal Access Token instead. Follow the steps
-in the for detailed instructions.
-
-**Note on Screenshots**
-
-Throughout this lab, you will be prompted to take screenshots and save
-them on your device. You will need these screenshots to either answer
-graded quiz questions or you will need to upload them as your
-submission for peer review at the end of this course. Your screenshot
-must have either the .jpg or .png extension.
-
-To take screenshots, you can either use various free screen-capture
-tools or your operating system\'s shortcut keys. For example:
-
-![](images/image5.png){width="4.1666666666666664e-2in"
-height="2.7777777777777776e-2in"}Mac: You can use Shift + Command + 3
-(⇧ + ⌘ + 3) on your keyboard to capture your entire screen or Shift +
-Command + 4 (⇧ + ⌘ + 4) to capture a window or area. The screen grabs
-will be saved as .jpg or .png files on your Desktop.
-
-![](images/image6.png){width="4.1666666666666664e-2in"
-height="2.7777777777777776e-2in"}Windows: You can capture your active
-window by pressing Alt + Print Screen on your keyboard. This command
-copies an image of your active window to the clipboard. Next, open an
-image editor, paste the image from your clipboard to the image editor,
-and save the image as a .jpg or .png file.
-
-**Initialize Development Environment**
-
-Because the Cloud IDE environment is ephemeral, it may be deleted at
-any time. The next time you come into the lab, a new environment may
-be created. Unfortunately, this means that you will need to initialize
-your development environment every time it is recreated. This
-shouldn\'t happen too often as the environment can last for several
-days at a time, but when it is removed, following is the procedure to
-recreate it.
-
-**Overview**
-
-**Create new repository from template**\
-1. Click this URL to open the starter code project:\
-2. Use the green **Use this template** button to clone this repository
-to your private GitHub account.
+#### Create new repository from template
+1. Click this URL to open the starter code project: [https://github.com/ibm-developer-skills-network/luggb-Back-End-Development-Pictures](https://github.com/ibm-developer-skills-network/luggb-Back-End-Development-Pictures)
+2. Use the green **Use this template** button to clone this repository to your private GitHub account.
 
 **Do not use Fork; use the Template button.**
 
-![](images/image7.png){width="9.005555555555556in"
-height="2.7430555555555554in"}
+![](images/image7.png)
 
-3\. Give your repository the name Back-End-Development-Pictures. This
-is the name that graders will look for to grade your work.\
-4. Ensure you select the Public option for your repository and then
-create it.
+3. Give your repository the name Back-End-Development-Pictures. This is the name that graders will look for to grade your work.
+4. Ensure you select the Public option for your repository and then create it.
 
-**Initialize Development Environment**
-
-Each time you need to set up your lab development environment you will
-need to run three commands.\
-Each command will be explained in further detail, one at a time, in
-the following section.\
-{your_github_account} represents your GitHub account username.
+#### Initialize Development Environment
+Each time you need to set up your lab development environment you will need to run three commands. Each command will be explained in further detail, one at a time, in the following section. `{your_github_account}` represents your GitHub account username.
 
 The commands include:
+* clone the GitHub repository from your account
+* change into the Back-End-Development-Pictures directory
+* execute the setup bash script
+* exit the terminal
 
-![](images/image8.png){width="4.1666666666666664e-2in"
-height="2.7777777777777776e-2in"}clone the GitHub repository from your
-account
+Now, let's discuss each of these commands and explain what needs to be done.
 
-![](images/image3.png){width="4.1666666666666664e-2in"
-height="4.1666666666666664e-2in"}change into the
-Back-End-Development-Pictures directory
+### Task Details
+Initialize your environment using the following steps:
+1. Open a terminal with `Terminal - New Terminal` if one is not open already.
+2. Next, use the export `GITHUB_ACCOUNT` command to export an environment variable that contains the name of your GitHub account.
+  - **Note:** Substitute your real GitHub account for the `{your_github_account}` placeholder below:
+  ```bash
+  export GITHUB_ACCOUNT={your_github_account}
+  ```
+3. Then use the following commands to clone your repository.
+  ```bash
+  git clone https://github.com/$GITHUB_ACCOUNT/Back-End-Development-Pictures.git
+  ```
+4. Change into the devops-capstone-project directory, and execute the ./bin/setup.sh command.
+  ```bash
+  cd /home/project/Back-End-Development-Pictures
+  bash ./bin/setup.sh
+  ```
+5. You should see the follow at the end of the setup execution:
+  ![](images/image11.png)
 
-![](images/image9.png){width="4.1666666666666664e-2in"
-height="2.7777777777777776e-2in"}execute the setup bash script
+6. Finally, use the exit command to close the current terminal. The environment will not be fully active until you open a new terminal in the next step.
+  ```bash
+  exit
+  ```
 
-![](images/image10.png){width="4.1666666666666664e-2in"
-height="4.1666666666666664e-2in"}exit the terminal\
-Now, let\'s discuss each of these commands and explain what needs to
-be done.
-
-**Task Details**
-
-Initialize your environment using the following steps:\
-1. Open a terminal with Terminal -\New Terminal if one is not open
-already.
-
-2\. Next, use the export GITHUB_ACCOUNT command to export an
-environment variable that contains the name of your GitHub account.
-
-about:blank 1/9
-
-9/4/23, 8:00 PM about:blank
-
-**Note:** Substitute your real GitHub account for the
-{your_github_account} placeholder below:
-
-1\. 1
-
-1\. export GITHUB_ACCOUNT={your_github_account}
-
-  -----------------------------------------------------------------------
-  Copied!                             Executed!
-  ----------------------------------- -----------------------------------
-                                      
-
-  -----------------------------------------------------------------------
-
-3\. Then use the following commands to clone your repository.
-
-1\. 1
-
-1\. git clone
-https://github.com/\$GITHUB_ACCOUNT/Back-End-Development-Pictures.git
-
-  -----------------------------------------------------------------------
-  Copied!                             Executed!
-  ----------------------------------- -----------------------------------
-                                      
-
-  -----------------------------------------------------------------------
-
-4\. Change into the devops-capstone-project directory, and execute the
-./bin/setup.sh command.
-
-1\. 1
-
-2\. 2
-
-1\. cd /home/project/Back-End-Development-Pictures
-
-2\. bash ./bin/setup.sh
-
-  -----------------------------------------------------------------------
-  Copied!                             Executed!
-  ----------------------------------- -----------------------------------
-                                      
-
-  -----------------------------------------------------------------------
-
-5\. You should see the follow at the end of the setup execution:
-
-![](images/image11.png){width="5.486111111111111in"
-height="0.8166666666666667in"}
-
-6\. Finally, use the exit command to close the current terminal. The
-environment will not be fully active until you open a new terminal in
-the next step.
-
-1\. 1
-
-1\. exit
-
-  -----------------------------------------------------------------------
-  Copied!                             Executed!
-  ----------------------------------- -----------------------------------
-                                      
-
-  -----------------------------------------------------------------------
-
-**Validate**
-
-To validate that your environment is working correctly, you must open
-a new terminal because the Python virtual environment will only
-activate when a new terminal is created. Ensure that you have used the
-exit command to exit the terminal in your previous task.
-
-1\. Open a terminal using Terminal -\New Terminal command. You
-should see the Python virtual environment (backend-pics-venv)
-prepended to the terminal prompt. Check that everything is working
-correctly by using the which python command:
-
-Check which Python you are using:
-
-1\. 1
-
-1\. which python
-
-  -----------------------------------------------------------------------
-  Copied!                             Executed!
-  ----------------------------------- -----------------------------------
-                                      
-
-  -----------------------------------------------------------------------
+### Validate
+To validate that your environment is working correctly, you must open a new terminal because the Python virtual environment will only activate when a new terminal is created. Ensure that you have used the exit command to exit the terminal in your previous task.
+1. Open a terminal using `Terminal - New Terminal` command. You should see the Python virtual environment (backend-pics-venv) prepended to the terminal prompt. Check that everything is working correctly by using the which python command:
+  ```bash
+  which python
+  ```
 
 You should get back:
-
-1\. 1
-
-2\. 2
-
-1\. (backend-pics-venv) theia:project\$ which python
-
-2\. /home/theia/backend-pics-venv/bin/python
-
-  -----------------------------------------------------------------------
-  Copied!
-  -----------------------------------------------------------------------
-
-  -----------------------------------------------------------------------
+  ```bash
+  (backend-pics-venv) theia:project$ which python
+  /home/theia/backend-pics-venv/bin/python
+  ```
 
 Check the Python version:
+  ```bash
+  python --version
+  ```
 
-1\. 1
+You should get back some patch level of Python 3.11:
+  ```bash
+  Python 3.11
+  ```
 
-1\. pyt[hon \--vers]{.underline}ion
+### Evidence
+1. Note down the URL of your GitHub repository (not the template) to submit for peer review. Recall the graders are looking for a repository named Back-End-Development-Pictures in your account.
 
-  -----------------------------------------------------------------------
-  Copied!                             Executed!
-  ----------------------------------- -----------------------------------
-
-  -----------------------------------------------------------------------
-
-You should get back some patch level of Python 3.9:
-
-1\. 1
-
-1\. Python 3.8.0
-
-  -----------------------------------------------------------------------
-  Copied!
-  -----------------------------------------------------------------------
-
-  -----------------------------------------------------------------------
-
-**Evidence**
-
-1\. Note down the URL of your GitHub repository (not the template) to
-submit for peer review. Recall the graders are looking for a
-repository named Back-End-Development-Pictures in your account.
-
-This completes the setup of the development environment. Anytime your
-environment is recreated, you will need to follow the above procedure.
+This completes the setup of the development environment. Anytime your environment is recreated, you will need to follow the above procedure.
 
 You are now ready to start working.
 
-**Project Overview**
+## Project Overview
 
-Your client has asked you to build a website for a famous band. The
-backend developer on the project has recently left, and you need to
-finish the code so the website can go live. The application consists
-of some different microservices working together.
+Your client has asked you to build a website for a famous band. The backend developer on the project has recently left, and you need to finish the code so the website can go live. The application consists of some different microservices working together.
 
-You are asked in this lab to finish the **Get Pictures** microservice.
-This microservice stores URLs of pictures from past events. The previous
-developer started a Python Flask-based REST API and wrote some tests
-following the TDD or test driven development process. You will need to
+You are asked in this lab to finish the **Get Pictures** microservice. This microservice stores URLs of pictures from past events. The previous developer started a Python Flask-based REST API and wrote some tests following the TDD or test driven development process. You will need to get the code from GitHub and fill in the missing pieces so that the code can pass all tests.
 
-get the code from GitHub and fill in the missing pieces so that the
-code can pass all tests.
-
-**REST API Guidelines Review**
+## REST API Guidelines Review
 
 The architect has provided you the following schema for the endpoints:
 
-**RESTful API Endpoints**
-
-**Action Method** **Return code** **Body** **URL Endpoint**
-
-List GET 200 OK Array of picture URLs \[{\...}\] GET /picture
-
-Create POST 201 CREATED A picture resource as json {\...} POST
-/picture
-
-Read GET 200 OK A picture as json {\...} GET /picture/{id}
-
-Update PUT 200 OK A picture as json {\...} PUT /picture/{id}
-
-Delete DELETE 204 NO CONTENT \"\" DELETE /picture/{id}
-
-The following end points were completed by the previous developer and
-can be used for reference:
+#### RESTful API Endpoints
+| ACTION | METHOD   | RETURN CODE   | BODY  | URL ENDPOINT      |
+|--------|----------|---------------|-------|-------------------|
+| List | GET | 200 OK | Array of picture URLs [{...}] | GET `/picture`
+| Create | POST | 201 CREATED | A picture resource as json {...} | POST `/picture`
+| Read | GET | 200 OK | A picture as json {...} | GET `/picture/{id}`
+| Update | PUT | 200 OK | A picture as json {...} | PUT `/picture/{id}`
+| Delete | DELETE | 204 NO CONTENT | "" | DELETE `/picture/{id}`
+The following end points were completed by the previous developer and can be used for reference:
 
 **Action Method Return code Body URL Endpoint**
+| ACTION | METHOD   | RETURN CODE   | BODY  | URL ENDPOINT      |
+|--------|----------|---------------|-------|-------------------|
+| Health | GET      | 200 OK        | ""    | GET `/health`     |
+| Health | GET      | 200 OK        | ""    | GET `/health`     |
+| Count  | GET      | 200 OK        | ""    | GET `/count`      |
+| Count  | GET      | 200 OK        | ""    | GET `/count`      |
 
-+-----------------+-----------------+-----------------+-----------------+
-| Health GET      | 200 OK          | \"\"            | GET /health   |
-+=================+=================+=================+=================+
-| Count GET       | 200 OK          | \"\"            | GET /count    |
-+-----------------+-----------------+-----------------+-----------------+
+## Exercise 1: Test health and count endpoints
 
-**Exercise 1: Test health and count endpoints**
+Before you implement the Get Pictures API, let's first test the two endpoints that the previous developer implemented.
+* `/health`
+* `/count`
 
-Before you implement the Get Pictures API, let\'s first test the two
-endpoints that the previous developer implemented.
+One way to test the endpoint is to start the server and then use the curl command to send a request to the endpoints. Open the terminal if you don't have it open already and change into the `` directory.
+  ```bash
+  cd /home/project/Back-End-Development-Pictures
+  ```
 
-![](images/image12.png){width="4.1666666666666664e-2in"
-height="4.1666666666666664e-2in"}/health
+Next, run the following command to run the flask server in development mode:
+  ```bash
+  flask --app app run --debugger --reload
+  ```
 
-![](images/image13.png){width="4.1666666666666664e-2in"
-height="2.7777777777777776e-2in"}/count
+Since your main applicaiton is in a file called app.py, you don't have to specify it. The following command has the same result:
+  ```bash
+  flask run --debugger --reload
+  ```
 
-One way to test the endpoint is to start the server and then use the
-curl command to send a request to the endpoints. Open the terminal if
-you don\'t have it open already and change into the \`\` directory.
+You should see the flask server running with the following output in the terminal:
+  ```bash
+  $ flask --app app run --debugger --reload
+  * Serving Flask app 'app'
+  * Debug mode: off
+  WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+  * Running on http://127.0.0.1:5000
+  Press CTRL+C to quit
+  * Restarting with stat
+  * Debugger is active!
+  * Debugger PIN: 132-341-814
+  ```
 
-1\. 1
-
-1\. cd /home/project/Back-End-Development-Pictures
-
-  -----------------------------------------------------------------------
-  Copied!                             Executed!
-  ----------------------------------- -----------------------------------
-  Copied!                             Executed!
-
-  -----------------------------------------------------------------------
-
-Next, run the following command to run the flask server in development
-mode:
-
-1\. 1
-
-1\. flask \--app app run \--debugger \--reload
-
-  -----------------------------------------------------------------------
-  Copied!                             Executed!
-  ----------------------------------- -----------------------------------
-
-  -----------------------------------------------------------------------
-
-about:blank 2/9
-
-9/4/23, 8:00 PM about:blank
-
-Since your main applicaiton is in a file called app.py, you don\'t
-have to specify it. The following command has the same result:
-
-1\. 1
-
-1\. flask run \--debugger \--reload
-
-  -----------------------------------------------------------------------
-  Copied!                             Executed!
-  ----------------------------------- -----------------------------------
-                                      
-
-  -----------------------------------------------------------------------
-
-You should see the flask server running with the following output in
-the terminal:
-
-1\. 1\
-2. 2\
-3. 3\
-4. 4\
-5. 5\
-6. 6\
-7. 7\
-8. 8\
-9. 9
-
-1\. \$ flask \--app app run \--debugger \--reload\
-2. \* Serving Flask app \'app\'\
-3. \* Debug mode: off\
-4. WARNING: This is a development server. Do not use it in a
-production deployment. Use a production WSGI server instead.
-
-5\. \* Running on http://127.0.0.1:5000\
-6. Press CTRL+C to quit\
-7. \* Restarting with stat\
-8. \* Debugger is active!
-
-9\. \* Debugger PIN: 132-341-814
-
-  -----------------------------------------------------------------------
-  i
-  -----------------------------------------------------------------------
-  i
-
-  -----------------------------------------------------------------------
-
-You can now execute the following curl command to see the output from
-the health and the count endpoints. **Use the split button in the
-terminal to create another terminal next to the one running the
-server.** You will need to change back into the correct direcory
-before running the command:
-
-1\. 1
-
-1\. cd /home/project/Back-End-Development-Pictures
-
-  -----------------------------------------------------------------------
-  i
-  -----------------------------------------------------------------------
-  i
-
-  -----------------------------------------------------------------------
+You can now execute the following curl command to see the output from the health and the count endpoints. **Use the split button in the terminal to create another terminal next to the one running the server.** You will need to change back into the correct directory before running the command:
+  ```bash
+  cd /home/project/Back-End-Development-Pictures
+  ```
 
 Execute the following commands:
-
-1\. 1
-
-1\. curl \--request GET \--url http://localhost:5000/health
-
-  -----------------------------------------------------------------------
-  Copied!                             Executed!
-  ----------------------------------- -----------------------------------
-                                      
-
-  -----------------------------------------------------------------------
-
+  ```bash
+  curl --request GET --url http://localhost:5000/health
+  ```
 and
+  ```bash
+  curl --request GET --url http://localhost:5000/count
+  ```
 
-1\. 1
+You should see the following results: 
+`/health`
 
-1\. curl \--request GET \--url http://localhost:5000/count
+  ```bash
+  $ curl --request GET --url http://localhost:5000/health
+  {"status":"OK"}
+  ```
 
-  -----------------------------------------------------------------------
-  Copied!                             Executed!
-  ----------------------------------- -----------------------------------
-                                      
+`/count`
+  ```bash
+  $ curl --request GET --url http://localhost:5000/count
+  {"length":10}
+  ```
 
-  -----------------------------------------------------------------------
+A second and preferred way to test code during development is by following the TDD method. As mentioned earlier, the previous developer has written the tests for the code. You can use the pytest command and see if the code passes the tests. It should pass for the `/count` and `/health` endpoints.
 
-You should see the following results:\
-/health
-
-1\. 1\
-2. 2
-
-1\. \$ curl \--request GET \--url http://localhost:5000/health\
-2. {\"status\":\"OK\"}
-
-  -----------------------------------------------------------------------
-  Copied!
-  -----------------------------------------------------------------------
-
-  -----------------------------------------------------------------------
-
-/count
-
-1\. 1\
-2. 2
-
-1\. \$ curl \--request GET \--url http://localhost:5000/count\
-2. {\"length\":10}
-
-  -----------------------------------------------------------------------
-  Copied!
-
-  -----------------------------------------------------------------------
-
-A second and preferred way to test code during development is by
-following the TDD method. As mentioned earlier, the previous developer
-has written the tests for the code. You can use the pytest command and
-see if the code passes the tests. It should pass for the /count and
-/health endpoints.
-
-**Your Task**
-
-1\. Run the pytest command to run two tests for the health and count
-endpoints. You can use the following command:
-
-1\. 1
-
-1\. pytest -k \'test_health or test_count\'
-
-  -----------------------------------------------------------------------
-  Copied!                             Executed!
-  ----------------------------------- -----------------------------------
-                                      
-
-  -----------------------------------------------------------------------
+### Your Task
+1. Run the pytest command to run two tests for the health and count endpoints. You can use the following command:
+  ```bash
+  pytest -k 'test_health or test_count'
+  ```
 
 You should see the following output:
+![](images/image14.png)
 
-![](images/image14.png){width="5.394444444444445in"
-height="1.3763888888888889in"}
+If you run the pytest command without the -k flag, it will run all the tests, and you will see the other tests fail. You use the -k flag to trim the output to just the two endpoint tests.
 
-If you run the pytest command without the -k flag, it will run all the
-tests, and you will see the other tests fail. You use the -k flag to
-trim the output to just the two endpoint tests.
+### Evidence
 
-**Evidence**
-
-1\. Run the pytest command listed above and take a screenshot of the
-terminal. There is no need to add the red boxes. Save the screenshot
-as exercise1-count-health-passing.jpg (or .png). The screenshot should
-show the two tests as passed.
+1. Run the pytest command listed above and take a screenshot of the terminal. There is no need to add the red boxes. Save the screenshot as exercise1-count-health-passing.jpg (or .png). The screenshot should show the two tests as passed.
 
 Congratulations! You have just completed your first story.
 
-**Exercise 2: Implement the GET /picture endpoint**
+## Exercise 2: Implement the GET /picture endpoint
 
-It is now time to implement the rest of the endpoints. If you run the
-pytest command now, you will see 9 tests as failed. Your output might
-look a little different than the screenshot as we have removed all the
-logs of the fiailing tests for brevity.
+It is now time to implement the rest of the endpoints. If you run the pytest command now, you will see 9 tests as failed. Your output might look a little different than the screenshot as we have removed all the logs of the fiailing tests for brevity.
+![](images/image15.png)
+Your task for the rest of the lab is to complete the remaining code to pass the failed tests. Let's start with the GET /picture endpoint first.
 
-about:blank 3/9
+### Your Task
+Before you write the code for the endpoint, let's create a branch so you can commit your code back to GitHub.
 
-9/4/23, 8:00 PM about:blank
+#### Task 1 : Create a Branch
+Since you are working in branches, you must pull the latest changes from the main branch to stay up to date. You can then create a new branch.
 
-![](images/image15.png){width="5.4944444444444445in"
-height="2.8847222222222224in"}
+Change into the Back-End-Development-Pictures directory and execute the following steps:
+  ```bash
+  cd /home/project/Back-End-Development-Pictures
+  git checkout main
+  git pull
+  git checkout -b backend-rest
+  ```
 
-Your task for the rest of the lab is to complete the remaining code to
-pass the failed tests. Let\'s start with the GET /picture endpoint
-first.
+This will switch to the main branch, pull the latest changes, and create a new branch. You will be asked to push all your changes to your GitHub repo and merge all code back into your main branch with a pull request.
 
-**Your Task**
+### Task 2 : Finish the code for the endpoint
+You will write all the code in the Back-End-Development-Pictures/backend/routes.py file.
 
-Before you write the code for the endpoint, let\'s create a branch so
-you can commit your code back to GitHub.
+**Note:** To open in File Explorer, go to this location:
+`Back-End-Development-Pictures/backend/routes.py`
 
-**Task 1 : Create a Branch**
-
-Since you are working in branches, you must pull the latest changes
-from the main branch to stay up to date. You can then create a new
-branch.
-
-Change into the Back-End-Development-Pictures directory and execute
-the following steps:
-
-1\. 1\
-2. 2\
-3. 3\
-4. 4
-
-1\. cd /home/project/Back-End-Development-Pictures\
-2. git checkout main\
-3. git pull\
-4. git checkout -b backend-rest
-
-  -----------------------------------------------------------------------
-  Copied!                             Executed!
-  ----------------------------------- -----------------------------------
-  Copied!                             Executed!
-
-  -----------------------------------------------------------------------
-
-This will switch to the main branch, pull the latest changes, and
-create a new branch. You will be asked to push all your changes to
-your GitHub repo and merge all code back into your main branch with a
-pull request.
-
-**Task 2 : Finish the code for the endpoint**
-
-You will write all the code in the
-Back-End-Development-Pictures/backend/routes.py file.
-
-  -----------------------------------------------------------------------
-  Open **routes.py** in IDE
-
-  -----------------------------------------------------------------------
-
-**Note:** To open in File Explorer, go to this location:\
-Back-End-Development-Pictures/backend/routes.py
-
-1\. Create a Flask route that responds to the GET method for the
-endpoint /picture.\
+1. Create a Flask route that responds to the GET method for the endpoint `/picture`.
 2. Create a function called get_pictures() to hold the implementation.
-
-3\. The URLs are loaded into a list called data. You need to return it
-in this method.
-
-4\. Run pytest until the following functions pass:
-
-1\. 1\
-2. 2\
-3. 3\
-4. 4\
-5. 5\
-1. tests/test_api.py::test_health PASSED\
-2. tests/test_api.py::test_count PASSED\
-3. tests/test_api.py::test_data_contains_10_pictures PASSED\
-4. tests/test_api.py::test_get_picture PASSED\
-5. tests/test_api.py::test_get_pictures_check_content_type_equals_json
-PASSED
-
-  -----------------------------------------------------------------------
-  Copied!
-  -----------------------------------------------------------------------
-
-  -----------------------------------------------------------------------
+3. The URLs are loaded into a list called data. You need to return it in this method.
+4. Run pytest until the following functions pass:
+  ```bash
+  tests/test_api.py::test_health PASSED
+  tests/test_api.py::test_count PASSED
+  tests/test_api.py::test_data_contains_10_pictures PASSED
+  tests/test_api.py::test_get_picture PASSED
+  tests/test_api.py::test_get_pictures_check_content_type_equals_json
+  ```
 
 **Evidence**
+1. Once the functions pass, take a screenshot of the passing functions and name it as exercise2-get-pictures-passing.jpg (or .png).
 
-1\. Once the functions pass, take a screenshot of the passing
-functions and name it as exercise2-get-pictures-passing.jpg (or .png).
+Congratulations! You just added the first REST endpoint to your backend.
 
-Congratulations! You just added the first REST endpoint to your
-backend.
-
-**Exercise 3: Implement the GET /picture/id endpoint**
+## Exercise 3: Implement the GET /picture/id endpoint
 
 As before, you will write the code for the endpoint in the
 ./backend/routes.py file.
@@ -696,10 +327,6 @@ As before, you will write the code for the endpoint in the
 
 **Note:** To open in File Explorer, go to this location:\
 Back-End-Development-Pictures/backend/routes.py
-
-about:blank 4/9
-
-9/4/23, 8:00 PM about:blank
 
 1\. Create a Flask route that responds to the POST method for the
 endpoint /picture/\<id\. Use the methods=\[\"POST\"\] in your app
@@ -904,10 +531,6 @@ PASSED\
 functions and name it asexercise6-delete-picture-passing.jpg (or
 .png).
 
-about:blank 5/9
-
-9/4/23, 8:00 PM about:blank
-
 You should now have all the tests passing as shown in the screenshot
 here:
 
@@ -960,10 +583,6 @@ the token you created in the beginning of the lab as your password.
 ![](images/image19.png){width="6.354166666666667in"
 height="2.2180555555555554in"}
 
-about:blank 6/9
-
-9/4/23, 8:00 PM about:blank
-
 5\. You can see the push logs in the terminal if the authentication is
 succesfull.
 
@@ -976,10 +595,7 @@ main branch.
 ![](images/image21.png){width="8.429166666666667in"
 height="4.068054461942257in"}
 
-about:blank 7/9
-
-9/4/23, 8:00 PM about:blank 7. Since there is no one else on your team,
-accept the pull request, merge it, and delete the branch.
+7. Since there is no one else on your team, accept the pull request, merge it, and delete the branch.
 
 ![](images/image22.png){width="7.7625in"
 height="4.044444444444444in"}
@@ -1106,11 +722,6 @@ height="5.555555555555555e-2in"}Click here for a hint.\
 height="5.555555555555555e-2in"}Click here for a hint.\
 **Solutions**\
 **List**
-
-about:blank 8/9
-
-9/4/23, 8:00 PM about:blank
-
 ![](images/image43.png){width="5.555555555555555e-2in"
 height="5.555555555555555e-2in"}Click here to check your solution.\
 **Read**
@@ -1130,21 +741,19 @@ height="5.555555555555555e-2in"}Click here to check your solution.\
 ![](images/image47.png){width="5.555555555555555e-2in"
 height="5.555555555555555e-2in"}Click here to check your solution.
 
-**Conclusion**\
+**Conclusion**
 Congratulations! You have finished implementing the first microservice
 for getting pictures. This microservice will be used by the main site
 in the final lab for the project.
 
-**Next Steps**\
+**Next Steps**
 You can resume the course at this point. You will be asked to create
 another microservice in the next module.
 
-**Author(s)**\
-CF\
+**Author(s)**
+CF
 **Changelog**
 
-**Date** **Version Changed by Change Description**\
-2023-02-04 0.1 CF Initial version created\
+**Date** **Version Changed by Change Description**
+2023-02-04 0.1 CF Initial version created
 2023-02-09 0.2 SH QA pass with edits
-
-about:blank 9/9
